@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NerdStore.Catalogo.Domain
 {
-    internal class Categoria: Entity
+    public class Categoria: Entity
     {
         public string Nome { get; private set; }
         public int Codigo { get; private set; }

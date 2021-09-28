@@ -156,5 +156,13 @@ namespace NerdStore.Core.DomainObjects
                 throw new DomainException(mensagem);
             }
         }
+
+        public static void ValidarSeArquivoVazio(long valor, string mensagem)
+        {
+            if (valor == 0)
+            {
+                throw new DomainException(mensagem);
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Catalogo.Domain
 {
-    internal class Produto : Entity, IAggregateRoot
+    public class Produto : Entity, IAggregateRoot
     {
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
@@ -14,8 +14,9 @@ namespace NerdStore.Catalogo.Domain
         public int QuantidadeEstoque { get; private set; }
         public Guid CategoriaId { get; private set; }
         public Categoria Categoria { get; private set; }
+        public Dimensoes Dimensoes { get; private set; }
 
-        public Produto(string nome, string descricao, bool ativo, decimal valor, IFormFile imagem, Guid categoriaId)
+        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, IFormFile imagem, Dimensoes dimensoes)
         {
             Nome = nome;
             Descricao = descricao;
@@ -23,6 +24,7 @@ namespace NerdStore.Catalogo.Domain
             Ativo = ativo;
             Imagem = imagem;
             CategoriaId = categoriaId;
+            Dimensoes = dimensoes;
             Validar();
         }
 
@@ -64,6 +66,7 @@ namespace NerdStore.Catalogo.Domain
             Validacoes.ValidarSeVazio(Descricao, "O campo Descricao do produto não pode estar vazio");
             Validacoes.ValidarSeIgual(CategoriaId, Guid.Empty, "O campo CategoriaId do produto não pode estar vazio");
             Validacoes.ValidarSeMenorQue(Valor, 1, "O campo Valor do produto não pode se menor igual a 0");
+            Validacoes.ValidarSeArquivoVazio(Imagem.Length, "O campo Imagem do produto não pode estar vazio");
             Validacoes.ValidarSeNulo(Imagem, "O campo Imagem do produto não pode estar vazio");
         }
     }
