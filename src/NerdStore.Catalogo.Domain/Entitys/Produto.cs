@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NerdStore.Core.DomainObjects;
 
-namespace NerdStore.Catalogo.Domain
+namespace NerdStore.Catalogo.Domain.Entitys
 {
     public class Produto : Entity, IAggregateRoot
     {
@@ -45,8 +45,16 @@ namespace NerdStore.Catalogo.Domain
 
         public void DebitarEstoque(int quantidade)
         {
-            if (quantidade < 0) quantidade *= -1;
-            if (!PossuiEstoque(quantidade)) throw new DomainException("Estoque insuficiente.");
+            if (quantidade < 0)
+            {
+                quantidade *= -1;
+            }
+
+            if (!PossuiEstoque(quantidade))
+            {
+                throw new DomainException("Estoque insuficiente.");
+            }
+
             QuantidadeEstoque -= quantidade;
         }
 

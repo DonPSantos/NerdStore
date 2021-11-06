@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using NerdStore.Catalogo.Domain.Entitys;
 using NerdStore.Core.DomainObjects;
 using System;
 using System.IO;
@@ -17,7 +18,7 @@ namespace NerdStore.Catalogo.Domain.Tests
             var writer = new StreamWriter(stream);
             IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", "Imagem");
 
-            IFormFile fileNull = new FormFile(Stream.Null, 0, 0, null,null);
+            IFormFile fileNull = new FormFile(Stream.Null, 0, 0, null, null);
 
             var ex = Assert.Throws<DomainException>(() =>
                 new Produto(string.Empty, "Descricao", false, 100, Guid.NewGuid(), DateTime.Now, file, new Dimensoes(1, 1, 1))
