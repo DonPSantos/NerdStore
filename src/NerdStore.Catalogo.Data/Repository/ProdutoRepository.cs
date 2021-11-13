@@ -51,7 +51,7 @@ namespace NerdStore.Catalogo.Data.Repository
         }
 
 #pragma warning disable CS8603 // Possível retorno de referência nula.
-        public async Task<Produto> ObterPorIdAsync(Guid id) => await _catalogoContext.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.Guid == id);
+        public async Task<Produto> ObterPorIdAsync(Guid id) => await _catalogoContext.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 #pragma warning restore CS8603 // Possível retorno de referência nula.
 
         public async Task<IEnumerable<Produto>> ObterTodosAsync()

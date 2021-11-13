@@ -34,7 +34,7 @@ namespace NerdStore.Catalogo.Domain.Entitys
         public void AlterarCategoria(Categoria categoria)
         {
             Categoria = categoria;
-            CategoriaId = categoria.Guid;
+            CategoriaId = categoria.Id;
         }
 
         public void AlterarDescricao(string descricao)

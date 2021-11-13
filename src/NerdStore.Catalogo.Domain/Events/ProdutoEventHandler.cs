@@ -15,7 +15,7 @@ namespace NerdStore.Catalogo.Domain.Events
         {
             var produto = _produtoRepository.ObterPorIdAsync(notification.AggregateId);
 
-            //TODO: implementar envio de email, no código do sistema da faculdade tem um exemplo.
+            //TODO: implementar envio de email, no código do sistema do SENAI tem um exemplo.
 
             throw new NotImplementedException();
         }

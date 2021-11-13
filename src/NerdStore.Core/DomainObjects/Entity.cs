@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NerdStore.Core.DomainObjects
+﻿namespace NerdStore.Core.DomainObjects
 {
     public abstract class Entity
     {
-        public Guid Guid { get; set; }
+        public Guid Id { get; set; }
 
         public Entity()
         {
-            Guid = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         public override bool Equals(object? obj)
         {
-            var compareTo =  obj as Entity;
+            var compareTo = obj as Entity;
             if (ReferenceEquals(this, compareTo)) return true;
             if (ReferenceEquals(null, compareTo)) return false;
 
-            return this.Guid.Equals(compareTo.Guid);
+            return Id.Equals(compareTo.Id);
         }
 
-        public static bool operator == (Entity a, Entity b)
+        public static bool operator ==(Entity a, Entity b)
         {
-            if(ReferenceEquals(a,null) && ReferenceEquals(b,null))
+            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
 
             if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
@@ -34,19 +28,19 @@ namespace NerdStore.Core.DomainObjects
 
             return a.Equals(b);
         }
-        public static bool operator != (Entity a, Entity b)
+        public static bool operator !=(Entity a, Entity b)
         {
             return !(a == b);
         }
 
         public override int GetHashCode()
         {
-            return (GetType().GetHashCode()*907) + Guid.GetHashCode();
+            return (GetType().GetHashCode() * 907) + Id.GetHashCode();
         }
 
         public override string ToString()
         {
-            return GetType().Name + "." + Guid.ToString();
+            return GetType().Name + "." + Id.ToString();
         }
     }
 }
