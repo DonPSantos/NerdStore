@@ -8,7 +8,7 @@ namespace NerdStore.Catalogo.Data
     {
         public CatalogoContext(DbContextOptions<CatalogoContext> options) : base(options)
         {
-
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public DbSet<Produto> Produtos { get; set; }

@@ -35,7 +35,6 @@ namespace NerdStore.Catalogo.Domain.Services
             return await _produtoRepository.UnitOfWork.Commit();
         }
 
-
         public async Task<bool> ReporEstoque(Guid produtoId, int quantidade)
         {
             var produto = await _produtoRepository.ObterPorIdAsync(produtoId);

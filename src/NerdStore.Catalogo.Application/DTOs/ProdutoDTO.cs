@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NerdStore.Catalogo.Application.DTOs
 {
@@ -20,26 +21,25 @@ namespace NerdStore.Catalogo.Application.DTOs
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public bool Ativo { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "O campo {0} precisa ter o valor minimo de {1} e máximo de {2}")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public decimal Valor { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O campo {0} precisa ter o valor minimo de {1} e máximo de {2}")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public decimal Altura { get; private set; }
+        public decimal Altura { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O campo {0} precisa ter o valor minimo de {1} e máximo de {2}")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public decimal Largura { get; private set; }
+        public decimal Largura { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O campo {0} precisa ter o valor minimo de {1} e máximo de {2}")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public decimal Profundidade { get; private set; }
+        public decimal Profundidade { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public DateTime DataCadastro { get; set; }
 
-        public IFormFile Imagem { get; set; }
+        [NotMapped]
+        public IFormFile ImagemUpload { get; set; }
+
+        public string ImagemUrl { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "O campo {0} precisa ter o valor minimo de {1} e máximo de {2}")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]

@@ -4,6 +4,8 @@ using NerdStore.Catalogo.Application.Services.Interfaces;
 using NerdStore.Catalogo.Domain.Entitys;
 using NerdStore.Catalogo.Domain.Interfaces;
 using NerdStore.Core.DomainObjects;
+using NerdStore.Infra.DropBoxServices.Interfaces;
+//using NerdStore.Infra.DropBoxServices.Interfaces;
 
 namespace NerdStore.Catalogo.Application.Services
 {
@@ -12,14 +14,17 @@ namespace NerdStore.Catalogo.Application.Services
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
         private readonly IEstoqueServices _estoqueServices;
+        private readonly IDropBoxService _dropBoxService;
 
-        public ProdutoAppService(IProdutoRepository produtoRepository,
-                                IMapper mapper,
-                                IEstoqueServices estoqueServices)
+        public ProdutoAppService(IProdutoRepository produtoRepository
+                                , IMapper mapper
+                                , IEstoqueServices estoqueServices
+                                , IDropBoxService dropBoxService)
         {
             _produtoRepository = produtoRepository;
             _mapper = mapper;
             _estoqueServices = estoqueServices;
+            _dropBoxService = dropBoxService;
         }
 
         #region Gets
@@ -47,18 +52,27 @@ namespace NerdStore.Catalogo.Application.Services
         #region Put and Post
         public async Task AdicionarProduto(ProdutoDTO produto)
         {
+            produto.ImagemUrl = await _dropBoxService.UploadArquivo(produto.ImagemUpload);
             var produtoAux = _mapper.Map<Produto>(produto);
             _produtoRepository.Adicionar(produtoAux);
 
-            await _produtoRepository.UnitOfWork.Commit();
+            if (!await _produtoRepository.UnitOfWork.Commit())
+                await _dropBoxService.ApagarImagem(produto.ImagemUrl);
         }
 
         public async Task AlterarProduto(ProdutoDTO produto)
         {
+            if (produto.ImagemUpload is not null)
+            {
+                await _dropBoxService.ApagarImagem(produto.ImagemUrl);
+                produto.ImagemUrl = await _dropBoxService.UploadArquivo(produto.ImagemUpload);
+            }
+
             var produtoAux = _mapper.Map<Produto>(produto);
             _produtoRepository.Atualizar(produtoAux);
 
-            await _produtoRepository.UnitOfWork.Commit();
+            if (!await _produtoRepository.UnitOfWork.Commit())
+                await _dropBoxService.ApagarImagem(produto.ImagemUrl);
         }
 
         public async Task<ProdutoDTO> DebitarEstoque(Guid produtoId, int quantidade)
@@ -70,7 +84,6 @@ namespace NerdStore.Catalogo.Application.Services
 
             return _mapper.Map<ProdutoDTO>(await _produtoRepository.ObterPorIdAsync(produtoId));
         }
-
 
         public async Task<ProdutoDTO> ReporEstoque(Guid produtoId, int quantidade)
         {

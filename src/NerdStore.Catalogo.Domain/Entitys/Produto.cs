@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NerdStore.Core.DomainObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NerdStore.Catalogo.Domain.Entitys
 {
@@ -10,19 +11,24 @@ namespace NerdStore.Catalogo.Domain.Entitys
         public bool Ativo { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public IFormFile Imagem { get; private set; }
+        [NotMapped]
+        public IFormFile ImagemUpload { get; private set; }
+        public string ImagemUrl { get; private set; }
         public int QuantidadeEstoque { get; private set; }
         public Guid CategoriaId { get; private set; }
         public Categoria Categoria { get; private set; }
         public Dimensoes Dimensoes { get; private set; }
 
-        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, IFormFile imagem, Dimensoes dimensoes)
+        public Produto() { }
+
+        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, IFormFile imagemUpload, string imagemUrl, Dimensoes dimensoes)
         {
             Nome = nome;
             Descricao = descricao;
             Valor = valor;
             Ativo = ativo;
-            Imagem = imagem;
+            ImagemUpload = imagemUpload;
+            ImagemUrl = imagemUrl;
             CategoriaId = categoriaId;
             Dimensoes = dimensoes;
             Validar();
@@ -39,7 +45,7 @@ namespace NerdStore.Catalogo.Domain.Entitys
 
         public void AlterarDescricao(string descricao)
         {
-            Validacoes.ValidarSeVazio(Descricao, "O campo Descricao do produto não pode estar vazio");
+            Validacoes.ValidarSeVazio(Descricao, "O campo Descrição do produto não pode estar vazio");
             Descricao = descricao;
         }
 
@@ -58,6 +64,12 @@ namespace NerdStore.Catalogo.Domain.Entitys
             QuantidadeEstoque -= quantidade;
         }
 
+        public void AlterarUrlImagem(string urlImagem)
+        {
+            Validacoes.ValidarSeVazio(urlImagem, "A URL da imagem não pode ser vazia.");
+            ImagemUrl = urlImagem;
+        }
+
         public void ReporEstoque(int quantidade)
         {
             QuantidadeEstoque += quantidade;
@@ -71,11 +83,10 @@ namespace NerdStore.Catalogo.Domain.Entitys
         public void Validar()
         {
             Validacoes.ValidarSeVazio(Nome, "O campo Nome do produto não pode estar vazio");
-            Validacoes.ValidarSeVazio(Descricao, "O campo Descricao do produto não pode estar vazio");
+            Validacoes.ValidarSeVazio(Descricao, "O campo Descrição do produto não pode estar vazio");
             Validacoes.ValidarSeIgual(CategoriaId, Guid.Empty, "O campo CategoriaId do produto não pode estar vazio");
             Validacoes.ValidarSeMenorQue(Valor, 1, "O campo Valor do produto não pode se menor igual a 0");
-            Validacoes.ValidarSeArquivoVazio(Imagem.Length, "O campo Imagem do produto não pode estar vazio");
-            Validacoes.ValidarSeNulo(Imagem, "O campo Imagem do produto não pode estar vazio");
+            Validacoes.ValidarSeNulo(ImagemUrl, "O campo Imagem do produto não pode estar vazio");
         }
     }
 }

@@ -19,8 +19,8 @@ namespace NerdStore.Catalogo.Data.Mappings
                 .HasColumnType("varchar(250)");
 
 
-            builder.Property(p => p.Imagem)
-                .HasColumnType("varbinary(MAX)");
+            builder.Property(p => p.ImagemUrl)
+                .HasColumnType("text");
 
 
             builder.OwnsOne(p => p.Dimensoes, cm =>

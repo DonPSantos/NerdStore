@@ -4,9 +4,9 @@ using NerdStore.Catalogo.Domain.Entitys;
 
 namespace NerdStore.Catalogo.Application.AutoMapper
 {
-    public class DomainToDTOMappingProfile : Profile
+    public class DomainToDtoMappingProfile : Profile
     {
-        public DomainToDTOMappingProfile()
+        public DomainToDtoMappingProfile()
         {
             CreateMap<Produto, ProdutoDTO>()
                 .ForMember(d => d.Altura, o => o.MapFrom(e => e.Dimensoes.Altura))

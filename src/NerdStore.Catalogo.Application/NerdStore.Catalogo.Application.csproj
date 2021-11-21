@@ -9,11 +9,12 @@
   <ItemGroup>
     <ProjectReference Include="..\NerdStore.Catalogo.Data\NerdStore.Catalogo.Data.csproj" />
     <ProjectReference Include="..\NerdStore.Catalogo.Domain\NerdStore.Catalogo.Domain.csproj" />
+    <ProjectReference Include="..\NerdStore.Infra\NerdStore.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
 </Project>
