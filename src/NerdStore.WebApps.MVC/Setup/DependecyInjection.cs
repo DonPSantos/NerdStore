@@ -9,6 +9,8 @@ using NerdStore.Catalogo.Domain.Services;
 using NerdStore.Core.Mediatr;
 using NerdStore.Infra.DropBoxServices;
 using NerdStore.Infra.DropBoxServices.Interfaces;
+using NerdStore.Infra.EmailServices;
+using NerdStore.Infra.EmailServices.Interfaces;
 
 namespace NerdStore.WebApps.MVC.Setup
 {
@@ -23,10 +25,15 @@ namespace NerdStore.WebApps.MVC.Setup
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IEstoqueServices, EstoqueServices>();
-            services.AddScoped<IDropBoxService, DropBoxService>();
+
             services.AddScoped<CatalogoContext>();
 
             services.AddScoped<INotificationHandler<ProdutoBaixoEstoqueEvent>, ProdutoEventHandler>();
+            #endregion
+
+            #region Infra
+            services.AddScoped<IDropBoxService, DropBoxService>();
+            services.AddScoped<IEmailService, EmailService>();
             #endregion
         }
     }

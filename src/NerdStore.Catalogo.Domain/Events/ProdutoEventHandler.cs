@@ -1,23 +1,30 @@
 ﻿using MediatR;
 using NerdStore.Catalogo.Domain.Interfaces;
+using NerdStore.Infra.EmailServices.Interfaces;
 
 namespace NerdStore.Catalogo.Domain.Events
 {
     public class ProdutoEventHandler : INotificationHandler<ProdutoBaixoEstoqueEvent>
     {
         private readonly IProdutoRepository _produtoRepository;
+        private readonly IEmailService _emailServices;
 
-        public ProdutoEventHandler(IProdutoRepository produtoRepository)
+        public ProdutoEventHandler(IProdutoRepository produtoRepository
+                                , IEmailService emailServices)
         {
             _produtoRepository = produtoRepository;
+            _emailServices = emailServices;
         }
         public async Task Handle(ProdutoBaixoEstoqueEvent notification, CancellationToken cancellationToken)
         {
-            var produto = _produtoRepository.ObterPorIdAsync(notification.AggregateId);
+            var produto = await _produtoRepository.ObterPorIdAsync(notification.AggregateId);
 
-            //TODO: implementar envio de email, no código do sistema do SENAI tem um exemplo.
 
-            throw new NotImplementedException();
+            var emailDestino = "donrock333@gmail.com";
+            var assunto = "Baixo Estoque";
+            var corpo = $"O produto {produto.Nome} está com estoque baixo, por favor repor.";
+
+            await _emailServices.EnviarEmail(emailDestino, assunto, corpo);
         }
     }
 }
