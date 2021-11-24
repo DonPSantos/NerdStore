@@ -42,5 +42,10 @@
         {
             return GetType().Name + "." + Id.ToString();
         }
+
+        public virtual bool IsValido()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
