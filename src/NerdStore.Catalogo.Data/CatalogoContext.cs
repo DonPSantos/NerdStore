@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Domain.Entitys;
 using NerdStore.Core.Data;
+using NerdStore.Core.Messages;
 
 namespace NerdStore.Catalogo.Data
 {
@@ -13,18 +14,6 @@ namespace NerdStore.Catalogo.Data
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(e =>
-             e.GetProperties().Where(p => p.ClrType == typeof(string))))
-            {
-                property.SetColumnType("varchar(100)");
-            }
-
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);
-        }
-
 
         public async Task<bool> Commit()
         {
@@ -42,5 +31,21 @@ namespace NerdStore.Catalogo.Data
 
             return await base.SaveChangesAsync() > 0;
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(e =>
+             e.GetProperties().Where(p => p.ClrType == typeof(string))))
+            {
+                property.SetColumnType("varchar(100)");
+            }
+
+            modelBuilder.Ignore<Event>();
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);
+        }
+
+
+
     }
 }

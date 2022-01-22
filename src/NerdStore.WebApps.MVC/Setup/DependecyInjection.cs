@@ -7,10 +7,15 @@ using NerdStore.Catalogo.Domain.Events;
 using NerdStore.Catalogo.Domain.Interfaces;
 using NerdStore.Catalogo.Domain.Services;
 using NerdStore.Core.Mediatr;
+using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Infra.DropBoxServices;
 using NerdStore.Infra.DropBoxServices.Interfaces;
 using NerdStore.Infra.EmailServices;
 using NerdStore.Infra.EmailServices.Interfaces;
+using NerdStore.Vendas.Application.Commands;
+using NerdStore.Vendas.Application.Events;
+using NerdStore.Vendas.Data.Repository;
+using NerdStore.Vendas.Domain.Interfaces;
 
 namespace NerdStore.WebApps.MVC.Setup
 {
@@ -18,10 +23,20 @@ namespace NerdStore.WebApps.MVC.Setup
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            #region Mediator
+
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+
+            #endregion
+
+            #region Notifications
+
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
+            #endregion
 
             #region Catalogo
 
-            services.AddScoped<IMediatrHandler, MediatrHandler>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IEstoqueServices, EstoqueServices>();
@@ -29,6 +44,14 @@ namespace NerdStore.WebApps.MVC.Setup
             services.AddScoped<CatalogoContext>();
 
             services.AddScoped<INotificationHandler<ProdutoBaixoEstoqueEvent>, ProdutoEventHandler>();
+            #endregion
+
+            #region Vendas
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
             #endregion
 
             #region Infra

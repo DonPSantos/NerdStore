@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.Catalogo.Data;
+using NerdStore.Vendas.Data;
 using NerdStore.WebApps.MVC.Data;
 using NerdStore.WebApps.MVC.Setup;
 using System.Net;
@@ -16,6 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<CatalogoContext>(options =>
+    options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<VendasContext>(options =>
     options.UseNpgsql(connectionString));
 
 
