@@ -14,6 +14,8 @@ using NerdStore.Infra.EmailServices;
 using NerdStore.Infra.EmailServices.Interfaces;
 using NerdStore.Vendas.Application.Commands;
 using NerdStore.Vendas.Application.Events;
+using NerdStore.Vendas.Application.Queries;
+using NerdStore.Vendas.Application.Queries.Interfaces;
 using NerdStore.Vendas.Data.Repository;
 using NerdStore.Vendas.Domain.Interfaces;
 
@@ -52,6 +54,7 @@ namespace NerdStore.WebApps.MVC.Setup
             services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
             #endregion
 
             #region Infra
