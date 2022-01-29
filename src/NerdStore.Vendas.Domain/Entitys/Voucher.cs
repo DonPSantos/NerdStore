@@ -1,4 +1,6 @@
-﻿using NerdStore.Core.DomainObjects;
+﻿using FluentValidation.Results;
+using NerdStore.Core.DomainObjects;
+using NerdStore.Vendas.Domain.Entitys.Validations;
 using NerdStore.Vendas.Domain.Enums;
 
 namespace NerdStore.Vendas.Domain.Entitys
@@ -18,5 +20,15 @@ namespace NerdStore.Vendas.Domain.Entitys
 
         //EF Relation
         public virtual ICollection<Pedido> Pedidos { get; private set; }
+
+        internal void DiminuirQuantidade()
+        {
+            Quantidade--;
+        }
+
+        internal ValidationResult ValidarSeAplicavel()
+        {
+            return new ValidarSeAplicavelValidation().Validate(this);
+        }
     }
 }
