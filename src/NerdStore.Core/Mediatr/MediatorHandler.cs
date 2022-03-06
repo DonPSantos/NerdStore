@@ -20,6 +20,7 @@ namespace NerdStore.Core.Mediatr
 
         public async Task PublicarEvento<T>(T evento) where T : Event
         {
+            await _mediatr.Publish(evento);
         }
 
         public async Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification
