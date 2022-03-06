@@ -1,13 +1,8 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Domain.Entitys.Validations
 {
-    public class ValidarSeAplicavelValidation: AbstractValidator<Voucher>
+    public class ValidarSeAplicavelValidation : AbstractValidator<Voucher>
     {
         public ValidarSeAplicavelValidation()
         {

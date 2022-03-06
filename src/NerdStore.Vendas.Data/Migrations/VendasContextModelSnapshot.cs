@@ -17,7 +17,7 @@ namespace NerdStore.Vendas.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -52,7 +52,6 @@ namespace NerdStore.Vendas.Data.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<Guid?>("VoucherId")
-                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<bool>("VoucherUtilizado")
@@ -140,8 +139,7 @@ namespace NerdStore.Vendas.Data.Migrations
                 {
                     b.HasOne("NerdStore.Vendas.Domain.Entitys.Voucher", "Voucher")
                         .WithMany("Pedidos")
-                        .HasForeignKey("VoucherId")
-                        .IsRequired();
+                        .HasForeignKey("VoucherId");
 
                     b.Navigation("Voucher");
                 });

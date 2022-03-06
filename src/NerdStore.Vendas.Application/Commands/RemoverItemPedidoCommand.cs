@@ -3,7 +3,7 @@ using NerdStore.Vendas.Application.Validation;
 
 namespace NerdStore.Vendas.Application.Commands
 {
-    public class RemoverItemPedidoCommand:Command
+    public class RemoverItemPedidoCommand : Command
     {
         public Guid ClienteId { get; private set; }
         public Guid ProdutoId { get; private set; }

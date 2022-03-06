@@ -2,11 +2,6 @@
 using NerdStore.Vendas.Application.Queries.ViewModels;
 using NerdStore.Vendas.Domain.Enums;
 using NerdStore.Vendas.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Application.Queries
 {
@@ -28,7 +23,7 @@ namespace NerdStore.Vendas.Application.Queries
                 ClienteId = pedido.ClienteId,
                 ValorTotal = pedido.ValorTotal,
                 PedidoId = pedido.Id,
-                ValorDesconto = pedido.Desconto+pedido.ValorTotal
+                ValorDesconto = pedido.Desconto + pedido.ValorTotal
             };
 
             if (pedido.VoucherId is not null)

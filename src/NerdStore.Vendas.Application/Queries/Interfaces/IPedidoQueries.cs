@@ -1,9 +1,4 @@
 ﻿using NerdStore.Vendas.Application.Queries.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Application.Queries.Interfaces
 {

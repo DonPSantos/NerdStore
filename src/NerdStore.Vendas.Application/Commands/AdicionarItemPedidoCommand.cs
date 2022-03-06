@@ -11,7 +11,7 @@ namespace NerdStore.Vendas.Application.Commands
         public int Quantidade { get; private set; }
         public decimal ValorUnitario { get; private set; }
 
-        public AdicionarItemPedidoCommand(Guid clienteId ,Guid produtoId, string nome, int quantidade, decimal valorUnitario)
+        public AdicionarItemPedidoCommand(Guid clienteId, Guid produtoId, string nome, int quantidade, decimal valorUnitario)
         {
             ClienteId = clienteId;
             ProdutoId = produtoId;

@@ -18,6 +18,11 @@ namespace NerdStore.Vendas.Data.Mappings
                 .WithOne(c => c.Pedido)
                 .HasForeignKey(c => c.PedidoId);
 
+            builder.HasOne(c => c.Voucher)
+                .WithMany(c => c.Pedidos)
+                .HasForeignKey(c => c.VoucherId)
+                .IsRequired(false);
+
             builder.ToTable("Pedidos");
         }
     }
